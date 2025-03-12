@@ -7,26 +7,25 @@ import Student from '@/models/Student';
 export async function GET(request) {
   await connectDB();
 
-  // Extract the 'name' query param: /api/students?name=John
   const { searchParams } = new URL(request.url);
   const name = searchParams.get('name');
 
-  if (!name) {
-    return NextResponse.json(
-      { message: 'Name query parameter is required' },
-      { status: 400 }
-    );
-  }
-
   try {
-    const student = await Student.findOne({ name });
-    if (!student) {
-      return NextResponse.json(
-        { message: 'Student not found' },
-        { status: 404 }
-      );
+    if (name) {
+      // Fetch a specific student if name is provided
+      const student = await Student.findOne({ name });
+      if (!student) {
+        return NextResponse.json(
+          { message: 'Student not found' },
+          { status: 404 }
+        );
+      }
+      return NextResponse.json({ student }, { status: 200 });
+    } else {
+      // No name provided, so return all students
+      const students = await Student.find({});
+      return NextResponse.json({ students }, { status: 200 });
     }
-    return NextResponse.json({ student }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { message: 'Server error', error: error.message },
@@ -148,6 +147,21 @@ export async function DELETE(request) {
       { message: 'Student deleted successfully', student },
       { status: 200 }
     );
+  } catch (error) {
+    return NextResponse.json(
+      { message: 'Server error', error: error.message },
+      { status: 500 }
+    );
+  }
+}
+
+// 5) GETALL => Get all students
+export async function GETALL() {
+  await connectDB();
+
+  try {
+    const students = await Student.find();
+    return NextResponse.json({ students }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { message: 'Server error', error: error.message },

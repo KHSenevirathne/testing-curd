@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function StudentReport() {
   const [name, setName] = useState("");
@@ -90,7 +91,7 @@ export default function StudentReport() {
       setMessage("An error occurred while updating student");
     }
   };
-  
+
   // 4) Handle Delete
   const handleDelete = async () => {
     if (!name) {
@@ -144,7 +145,7 @@ export default function StudentReport() {
             <button
               type="button"
               onClick={handleSearch}
-              className="mt-1 px-4 py-2 bg-blue-700 text-white rounded-md hover:bg-blue-800 focus:ring-2 focus:ring-blue-500"
+              className="mt-1 px-4 py-2 bg-blue-700 text-white rounded-md hover:bg-blue-800 focus:ring-2 focus:ring-blue-500 cursor-pointer"
             >
               Search
             </button>
@@ -184,24 +185,29 @@ export default function StudentReport() {
           <button
             type="button"
             onClick={handleAdd}
-            className="mt-1 px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 focus:ring-2 focus:ring-green-500"
+            className="mt-1 px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 focus:ring-2 focus:ring-green-500 cursor-pointer"
           >
             Add
           </button>
           <button
             type="button"
             onClick={handleUpdate}
-            className="mt-1 px-4 py-2 bg-yellow-600 text-black rounded-md hover:bg-yellow-700 focus:ring-2 focus:ring-yellow-500"
+            className="mt-1 px-4 py-2 bg-yellow-600 text-black rounded-md hover:bg-yellow-700 focus:ring-2 focus:ring-yellow-500 cursor-pointer"
           >
             Update
           </button>
           <button
             type="button"
             onClick={handleDelete}
-            className="mt-1 px-4 py-2 bg-red-700 text-white rounded-md hover:bg-red-800 focus:ring-2 focus:ring-red-500"
+            className="mt-1 px-4 py-2 bg-red-700 text-white rounded-md hover:bg-red-800 focus:ring-2 focus:ring-red-500 cursor-pointer"
           >
             Delete
           </button>
+          <Link href="/report"
+            className="mt-1 px-4 py-2 text-blue-700 hover:text-blue-800 hover:underline"
+          >
+            To Report
+          </Link>
         </div>
       </form>
 
